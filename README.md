@@ -2,6 +2,10 @@
 
 用于PHP方便调用微信小程序的 [服务端接口](https://developers.weixin.qq.com/miniprogram/dev/api-backend/)
 
+## 接入要求
+
+"php": ">=5.4.0"
+
 ## 接入方式
 
 以Lumen作为例子
@@ -87,3 +91,15 @@ try {
 ```
 
 然后composer update一下。
+
+
+## 支持接口
+
+- AccessToken->getAccessToken()：[获取小程序全局唯一后台接口调用凭据](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html)
+- Auth->code2session()：[用code获取openid](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html)
+- User->getPhoneNumber()：[获取手机号](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html)
+- SubscribeMessage->send()：[发送订阅消息](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html)
+- WxaCode->getUnlimited()：[生成小程序码，可接受页面参数较短，生成个数不受限](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html)
+- WxaCode->get()：[生成小程序码，可接受 path 参数较长，生成个数受限](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html)
+- SecCheck->messageIsRisky()：[文本是否为风险内容](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html)
+- SecCheck->imageIsRisky()：[文本是否为风险内容](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.imgSecCheck.html)

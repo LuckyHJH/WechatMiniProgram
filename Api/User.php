@@ -34,7 +34,7 @@ class User extends ApiBase
         }
 
         $data = json_decode($data, true);
-        $watermark_appid = $data['watermark']['appid'] ?? '';
+        $watermark_appid = isset($data['watermark']['appid']) ? $data['watermark']['appid'] : '';
         if ($watermark_appid != $appid) {
             $this->addError('appid not match', [
                 'watermark_appid' => $watermark_appid,
@@ -44,9 +44,9 @@ class User extends ApiBase
         }
 
         $PhoneNumber = new PhoneNumber();
-        $PhoneNumber->phoneNumber = $data['phoneNumber'] ?? '';
-        $PhoneNumber->purePhoneNumber = $data['purePhoneNumber'] ?? '';
-        $PhoneNumber->countryCode = $data['countryCode'] ?? '';
+        $PhoneNumber->phoneNumber = isset($data['phoneNumber']) ? $data['phoneNumber'] : '';
+        $PhoneNumber->purePhoneNumber = isset($data['purePhoneNumber']) ? $data['purePhoneNumber'] : '';
+        $PhoneNumber->countryCode = isset($data['countryCode']) ? $data['countryCode'] : '';
         return $PhoneNumber;
     }
 
