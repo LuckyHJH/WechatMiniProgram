@@ -1,0 +1,28 @@
+{
+    "name": "luckyhjh/wechat-mini-program",
+    "description": "The Wechat Mini Program SDK",
+    "keywords": ["wechat", "weixin", "sdk"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LuckyHJH"
+        }
+    ],
+    "repositories":{
+        "packagist":{
+            "type":"composer",
+            "url":"https://mirrors.aliyun.com/composer/"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "LuckyHJH\\WechatMiniProgram\\": ""
+        }
+    }
+}
