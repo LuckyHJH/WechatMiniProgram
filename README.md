@@ -4,21 +4,24 @@
 
 ## 接入要求
 
-"php": ">=5.4.0"
+"php": ">=5.4"
 
 ## 接入方式
 
 以Lumen作为例子
 
-### 下载安装
-目录放到 app/Libs/WechatMiniProgram/
+### 1、composer安装
 
-### 新建文件
-新建类并继承 \WechatMiniProgram\WechatMiniProgram，如 app/Libs/WechatMiniProgram.php
+composer require luckyhjh/wechat-mini-program
+
+### 2、新建文件
+
+新建类并继承 WechatMiniProgram，如 app/Libs/WechatMiniProgram.php：
 
 ```php
 namespace App\Libs;
 
+use Illuminate\Support\Facades\Cache;
 use WechatMiniProgram\Api\AccessToken;
 use WechatMiniProgram\ApiException;
 
@@ -69,29 +72,20 @@ class WechatMiniProgram extends \WechatMiniProgram\WechatMiniProgram
 }
 ```
 
-### 业务调用
+### 3、业务调用
+
 业务里根据需要调用
 
 ```php
 $mp = new \App\Libs\WechatMiniProgram();
 $Auth = new Auth($mp);
-$User = new User($mp);//如果要调用其它接口
+$User = new User($mp);//如果要调用其它接口，可复用$mp
 try {
     $session = $Auth->code2session($code);
     $openid = $session->openid;
 } catch (ApiException $apiException) {
 }
 ```
-
-### composer引用
-在composer.json文件，在"autoload"的"psr-4"里，加上：
-
-```
-"WechatMiniProgram\\": "app/Libs/WechatMiniProgram"
-```
-
-然后composer update一下。
-
 
 ## 支持接口
 
