@@ -56,7 +56,7 @@ class WxaCode extends ApiBase
             throw new ApiException($msg, 422);
         }
 
-        $accessToken = $this->miniProgram->getApiToken();
+        $accessToken = $this->miniProgram->getAccessToken();
         $url = self::API_HOST . "/wxa/getwxacodeunlimit?access_token={$accessToken}";
         $data = [
             'scene'  => $scene,
@@ -103,7 +103,7 @@ class WxaCode extends ApiBase
             throw new ApiException($msg, 422);
         }
 
-        $accessToken = $this->miniProgram->getApiToken();
+        $accessToken = $this->miniProgram->getAccessToken();
         $url = self::API_HOST . "/wxa/getwxacode?access_token={$accessToken}";
         $data = [
             'path'  => $path,

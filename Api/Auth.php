@@ -39,7 +39,6 @@ class Auth extends ApiBase
             'grant_type'  => 'authorization_code',
         ];
         $res = $this->httpRequest('GET', $url, $data);
-        //$res = ['session_key' => 'f9umDYdqoz0wgacCrLDYFA==', 'openid' => 'o4W6G5Fz0M5imbBAIFxSfmPMmKe8'];
 
         $code = isset($res['errcode']) ? $res['errcode'] : 0;
         $msg = isset($res['errmsg']) ? $res['errmsg'] : 'ok';

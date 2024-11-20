@@ -35,7 +35,7 @@ class SecCheck extends ApiBase
             throw new ApiException('message is too long');
         }
 
-        $accessToken = $this->miniProgram->getApiToken();
+        $accessToken = $this->miniProgram->getAccessToken();
         $url = self::API_HOST . "/wxa/msg_sec_check?access_token={$accessToken}";
         $data = [
             'content'  => $content,
@@ -69,7 +69,7 @@ class SecCheck extends ApiBase
             throw new ApiException('image is too large');
         }
 
-        $accessToken = $this->miniProgram->getApiToken();
+        $accessToken = $this->miniProgram->getAccessToken();
         $url = self::API_HOST . "/wxa/img_sec_check?access_token={$accessToken}";
         $data = [
             'media'  => $file,

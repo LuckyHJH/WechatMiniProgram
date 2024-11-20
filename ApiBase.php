@@ -62,7 +62,7 @@ class ApiBase
 
         //access_token错误，那就重新设置
         if (isset($res['code']) && $res['code'] == WechatMiniProgram::ERROR_ACCESS_TOKEN) {
-            $this->miniProgram->setApiToken('');
+            $this->miniProgram->setAccessToken('');
         }
 
         return $res;

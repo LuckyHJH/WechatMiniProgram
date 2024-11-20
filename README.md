@@ -43,7 +43,7 @@ class WechatMiniProgram extends \WechatMiniProgram\WechatMiniProgram
      * 读取token
      * @return string
      */
-    public function getApiToken()
+    public function getAccessToken()
     {
         $cache_name = 'wx_token_' . $this->getAppid();
         $access_token = Cache::get($cache_name);
@@ -55,7 +55,7 @@ class WechatMiniProgram extends \WechatMiniProgram\WechatMiniProgram
         try {
             $Token = $AccessToken->getAccessToken();
             $access_token = $Token->access_token;
-            $this->setApiToken($access_token, $Token->expires_in);
+            $this->setAccessToken($access_token, $Token->expires_in);
             return $access_token;
 
         } catch (ApiException $apiException) {
@@ -69,7 +69,7 @@ class WechatMiniProgram extends \WechatMiniProgram\WechatMiniProgram
      * @param int $expire
      * @return bool
      */
-    public function setApiToken($access_token, $expire = 7200)
+    public function setAccessToken($access_token, $expire = 7200)
     {
         $cache_name = 'wx_token_' . $this->getAppid();
         return Cache::set($cache_name, $access_token, $expire);
@@ -96,7 +96,7 @@ class WechatMiniProgram extends \WechatMiniProgram\WechatMiniProgram
      * 读取token
      * @return string
      */
-    public function getApiToken()
+    public function getAccessToken()
     {
         $cache_name = 'wx_token_' . $this->getAppid();
         $access_token = cache($cache_name);
@@ -108,7 +108,7 @@ class WechatMiniProgram extends \WechatMiniProgram\WechatMiniProgram
         try {
             $Token = $AccessToken->getAccessToken();
             $access_token = $Token->access_token;
-            $this->setApiToken($access_token, $Token->expires_in);
+            $this->setAccessToken($access_token, $Token->expires_in);
             return $access_token;
 
         } catch (ApiException $apiException) {
@@ -122,7 +122,7 @@ class WechatMiniProgram extends \WechatMiniProgram\WechatMiniProgram
      * @param int $expire
      * @return bool
      */
-    public function setApiToken($access_token, $expire = 7200)
+    public function setAccessToken($access_token, $expire = 7200)
     {
         $cache_name = 'wx_token_' . $this->getAppid();
         return cache($cache_name, $access_token, $expire);

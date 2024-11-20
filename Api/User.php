@@ -2,39 +2,48 @@
 
 namespace WechatMiniProgram\Api;
 
-use WechatMiniProgram\Aes\WxBizDataCrypt;
 use WechatMiniProgram\ApiBase;
 use WechatMiniProgram\ApiException;
 use WechatMiniProgram\Model\PhoneNumber;
 
 class User extends ApiBase
 {
+
     /**
      * 获取手机号
-     * @param string $sessionKey 登录后获取的会话密钥
-     * @param string $iv 与用户数据一同返回的初始向量
-     * @param string $encryptedData 加密的用户数据
+     * @param string $code
      * @return PhoneNumber
      * @throws ApiException
-     * @see https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html
+     * @see https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/user-info/phone-number/getPhoneNumber.html
      */
-    public function getPhoneNumber($sessionKey, $iv, $encryptedData)
+    public function getPhoneNumber(string $code)
     {
-        $appid = $this->miniProgram->getAppid();
-        $pc = new WxBizDataCrypt($appid, $sessionKey);
-        $errCode = $pc->decryptData($encryptedData, $iv, $data);
-
-        if ($errCode != 0) {
-            $this->addError($errCode, [
-                'sessionKey' => $sessionKey,
-                'iv' => $iv,
-                'encryptedData' => $encryptedData,
+        if (empty($code)) {
+            $msg = 'params error';
+            $this->addError($msg, [
+                'code' => $code,
             ]);
-            throw new ApiException($errCode, $errCode);
+            throw new ApiException($msg, 422);
         }
 
-        $data = json_decode($data, true);
-        $watermark_appid = isset($data['watermark']['appid']) ? $data['watermark']['appid'] : '';
+        $accessToken = $this->miniProgram->getAccessToken();
+        $url = self::API_HOST . "/wxa/business/getuserphonenumber?access_token={$accessToken}";
+        $data = [
+            'code'  => $code,
+        ];
+        $res = $this->httpRequest('JSON', $url, $data);
+
+        $code = isset($res['errcode']) ? $res['errcode'] : 0;
+        $msg = isset($res['errmsg']) ? $res['errmsg'] : 'ok';
+        $phone_info = isset($res['phone_info']) ? $res['phone_info'] : [];
+
+        if ($code != 0 || empty($phone_info)) {
+            $this->addError($msg, $res);
+            throw new ApiException($msg, $code);
+        }
+
+        $watermark_appid = isset($phone_info['watermark']['appid']) ? $phone_info['watermark']['appid'] : '';
+        $appid = $this->miniProgram->getAppid();
         if ($watermark_appid != $appid) {
             $this->addError('appid not match', [
                 'watermark_appid' => $watermark_appid,
@@ -44,9 +53,9 @@ class User extends ApiBase
         }
 
         $PhoneNumber = new PhoneNumber();
-        $PhoneNumber->phoneNumber = isset($data['phoneNumber']) ? $data['phoneNumber'] : '';
-        $PhoneNumber->purePhoneNumber = isset($data['purePhoneNumber']) ? $data['purePhoneNumber'] : '';
-        $PhoneNumber->countryCode = isset($data['countryCode']) ? $data['countryCode'] : '';
+        $PhoneNumber->phoneNumber = isset($phone_info['phoneNumber']) ? $phone_info['phoneNumber'] : '';
+        $PhoneNumber->purePhoneNumber = isset($phone_info['purePhoneNumber']) ? $phone_info['purePhoneNumber'] : '';
+        $PhoneNumber->countryCode = isset($phone_info['countryCode']) ? $phone_info['countryCode'] : '';
         return $PhoneNumber;
     }
 

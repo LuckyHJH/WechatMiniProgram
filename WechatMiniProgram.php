@@ -20,7 +20,7 @@ abstract class WechatMiniProgram
      * 获取保存下来的access_token
      * @return string
      */
-    abstract public function getApiToken();
+    abstract public function getAccessToken();
 
     /**
      * 把获取到的access_token保存下来
@@ -28,7 +28,7 @@ abstract class WechatMiniProgram
      * @param int $expire
      * @return bool
      */
-    abstract public function setApiToken($access_token, $expire = 7200);
+    abstract public function setAccessToken($access_token, $expire = 7200);
 
 
     public function getAppid()

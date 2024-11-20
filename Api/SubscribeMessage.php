@@ -33,7 +33,7 @@ class SubscribeMessage extends ApiBase
             throw new ApiException($msg, 422);
         }
 
-        $accessToken = $this->miniProgram->getApiToken();
+        $accessToken = $this->miniProgram->getAccessToken();
         $url = self::API_HOST . "/cgi-bin/message/subscribe/send?access_token={$accessToken}";
         $data = [
             'touser'  => $openid,
